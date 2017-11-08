@@ -76,10 +76,11 @@ angular.module(PKG.name + '.commons')
             if (confirm) {
               isCurrentlyExistingDataset = true;
 
-              // If schema is empty, do not disable schema editor
-              var shouldDisableSchema = !!schema;
-
-              EventPipe.emit('dataset.selected', schema, null, shouldDisableSchema, $scope.model);
+              if (!schema) {
+                EventPipe.emit('schema.clear');
+              } else {
+                EventPipe.emit('dataset.selected', schema, null, true, $scope.model);
+              }
             } else {
               $scope.model = oldDatasetName;
             }
